@@ -1,0 +1,29 @@
+FORMAT HASIL PENGUJIAN UNTUK DIMASUKKAN KE LAPORAN
+
+Skenario 1: i4 + Round Robin
+- Jumlah backend: 4 server
+- Algoritma: Round Robin
+- Jumlah request: 20
+- Jumlah worker: 10
+- Pola hasil: request dibagi secara bergiliran ke i4-web-1 sampai i4-web-4.
+
+Skenario 2: i4 + Least Connections
+- Jumlah backend: 4 server
+- Algoritma: Least Connections
+- Jumlah request: 20
+- Jumlah worker: 10
+- Pola hasil: request diarahkan ke server dengan koneksi aktif paling sedikit.
+
+Skenario 3: i7 + Round Robin
+- Jumlah backend: 7 server
+- Algoritma: Round Robin
+- Jumlah request: 28
+- Jumlah worker: 14
+- Pola hasil: request dibagi secara bergiliran ke i7-web-1 sampai i7-web-7.
+
+Skenario 4: i7 + Least Connections
+- Jumlah backend: 7 server
+- Algoritma: Least Connections
+- Jumlah request: 28
+- Jumlah worker: 14
+- Pola hasil: distribusi lebih dinamis karena mempertimbangkan jumlah koneksi aktif pada server.

@@ -1,0 +1,79 @@
+services:
+  nginx-lb:
+    image: nginx:alpine
+    container_name: i4-roundrobin-nginx-lb
+    ports:
+      - "8085:80"
+    volumes:
+      - ./nginx/i4-roundrobin.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - i4-web-1
+      - i4-web-2
+      - i4-web-3
+      - i4-web-4
+    networks:
+      - i4-roundrobin-network
+
+  i4-web-1:
+    image: python:3.9-slim
+    container_name: i4-roundrobin-web-1
+    environment:
+      - SERVER_NAME=WEB SERVER 1 (i4-web-1)
+      - SERVER_GROUP=I4
+      - SERVER_COLOR=#00d4ff
+      - PROCESS_DELAY=0.30
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i4-roundrobin-network
+
+  i4-web-2:
+    image: python:3.9-slim
+    container_name: i4-roundrobin-web-2
+    environment:
+      - SERVER_NAME=WEB SERVER 2 (i4-web-2)
+      - SERVER_GROUP=I4
+      - SERVER_COLOR=#00ff99
+      - PROCESS_DELAY=0.10
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i4-roundrobin-network
+
+  i4-web-3:
+    image: python:3.9-slim
+    container_name: i4-roundrobin-web-3
+    environment:
+      - SERVER_NAME=WEB SERVER 3 (i4-web-3)
+      - SERVER_GROUP=I4
+      - SERVER_COLOR=#ffd166
+      - PROCESS_DELAY=0.20
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i4-roundrobin-network
+
+  i4-web-4:
+    image: python:3.9-slim
+    container_name: i4-roundrobin-web-4
+    environment:
+      - SERVER_NAME=WEB SERVER 4 (i4-web-4)
+      - SERVER_GROUP=I4
+      - SERVER_COLOR=#ef476f
+      - PROCESS_DELAY=0.10
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i4-roundrobin-network
+
+networks:
+  i4-roundrobin-network:
+    driver: bridge

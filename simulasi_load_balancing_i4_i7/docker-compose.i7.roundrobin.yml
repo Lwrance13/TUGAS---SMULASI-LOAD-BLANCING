@@ -1,0 +1,127 @@
+services:
+  nginx-lb:
+    image: nginx:alpine
+    container_name: i7-roundrobin-nginx-lb
+    ports:
+      - "8085:80"
+    volumes:
+      - ./nginx/i7-roundrobin.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - i7-web-1
+      - i7-web-2
+      - i7-web-3
+      - i7-web-4
+      - i7-web-5
+      - i7-web-6
+      - i7-web-7
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-1:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-1
+    environment:
+      - SERVER_NAME=WEB SERVER 1 (i7-web-1)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#00d4ff
+      - PROCESS_DELAY=0.30
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-2:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-2
+    environment:
+      - SERVER_NAME=WEB SERVER 2 (i7-web-2)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#00ff99
+      - PROCESS_DELAY=0.20
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-3:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-3
+    environment:
+      - SERVER_NAME=WEB SERVER 3 (i7-web-3)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#ffd166
+      - PROCESS_DELAY=0.10
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-4:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-4
+    environment:
+      - SERVER_NAME=WEB SERVER 4 (i7-web-4)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#ef476f
+      - PROCESS_DELAY=0.25
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-5:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-5
+    environment:
+      - SERVER_NAME=WEB SERVER 5 (i7-web-5)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#a78bfa
+      - PROCESS_DELAY=0.15
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-6:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-6
+    environment:
+      - SERVER_NAME=WEB SERVER 6 (i7-web-6)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#f97316
+      - PROCESS_DELAY=0.35
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+  i7-web-7:
+    image: python:3.9-slim
+    container_name: i7-roundrobin-web-7
+    environment:
+      - SERVER_NAME=WEB SERVER 7 (i7-web-7)
+      - SERVER_GROUP=I7
+      - SERVER_COLOR=#22c55e
+      - PROCESS_DELAY=0.10
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sh -c "pip install --no-cache-dir flask && python app.py"
+    networks:
+      - i7-roundrobin-network
+
+networks:
+  i7-roundrobin-network:
+    driver: bridge
